@@ -1,0 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
+/*   Updated: 2023/01/25 16:22:29 by maquentr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+int	end_game(int exit_code)
+{
+	//if (data()->map_str != NULL)
+	//	(free(data()->map_str), ft_freematrix(g->matrix));
+	//free_images(g);
+	if (data()->mlx)
+	{
+		mlx_clear_window(data()->mlx, data()->win);
+		mlx_destroy_window(data()->mlx, data()->win);
+		mlx_destroy_display(data()->mlx);
+		free(data()->mlx);
+	}
+	exit(exit_code);
+	return (0);
+}
+void error(char *msg)
+{
+	ft_printf_fd(2, "Error\n%s\n", msg);
+	end_game(1);
+}
+
+void check_arguments(int ac, char **av)
+{
+	int file_len;
+
+	if (ac > 2)
+		error(ERR_TOO_MUCH_ARGS);
+	if (ac < 2)
+		error(ERR_MISSING_ARGS);
+	file_len = ft_strlen(av[1]);
+	if (!ft_strnstr(&av[1][file_len - 4], ".cub", 4))
+		error(ERR_BAD_EXTENSION);
+}
+
+int main(int ac, char **av)
+{
+	(void)ac;
+	// check_arguments(ac, av);
+	data()->filename = av[1];
+	data()->fd = open(data()->filename, O_RDONLY);
+	char *tmp;
+	tmp = get_next_line(data()->fd);
+	printf("MAIN TMP = %s", tmp);
+	while (tmp)
+	{
+		tmp = get_next_line(data()->fd);
+		printf("MAIN TMP = %s", tmp);
+	}
+	if (parsing_map())
+		printf("\nExiting...\n");
+	else
+	{
+	// init_map();
+	// end_game(1);
+	}
+}

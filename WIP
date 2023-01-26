@@ -1,5 +1,14 @@
+
+------------TO DO--------------------
 - Error GNL EOF
 REPARER GC GNL
 
 chercker la validite du path_to_the_north_texture etc 
-checker si les couleurs du sol / ciel sont valides
+checker si les couleurs du sol / ciel sont valides ---------- DONE
+
+
+
+------------ DONE --------------------
+ordre des bails avant la map checked
+validite des valeurs RGB de FC checked
+l'alloc de t_map se fait en malloc(t_map) et non malloc(t_map *)

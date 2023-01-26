@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/01/25 16:50:01 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/01/26 15:46:49 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,22 @@ typedef struct s_data
 
 t_data	*data(void);
 
-/*parsing*/
+/*parsing.c*/
 int	parsing_map(void);
+/*parsing2.c*/
+int check_textures_order();
 int	check_tiles();
-void print_map(char **map);
-
+/*parsing3.c*/
+int floodfill(int y, int x);
+int	loop_open_walls(char **dup);
+int	check_open_wall(char **array, int y, int x);
 
 
 void	init_map(void);
 
+void print_map(char **map);
 void error(char *msg);
+void free_map(char **map);
 
 int	end_game(int exit_code);
 

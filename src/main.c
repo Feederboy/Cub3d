@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/01/25 16:22:29 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/01/26 14:45:32 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void check_arguments(int ac, char **av)
 
 int main(int ac, char **av)
 {
-	(void)ac;
-	// check_arguments(ac, av);
+	check_arguments(ac, av);
 	data()->filename = av[1];
 	data()->fd = open(data()->filename, O_RDONLY);
 	char *tmp;
@@ -60,8 +59,9 @@ int main(int ac, char **av)
 		tmp = get_next_line(data()->fd);
 		printf("MAIN TMP = %s", tmp);
 	}
+	printf("MAIN TMP = %s", tmp);
 	if (parsing_map())
-		printf("\nExiting...\n");
+		error("something went wrong with the map\n");
 	else
 	{
 	// init_map();

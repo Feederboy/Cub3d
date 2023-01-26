@@ -6,46 +6,106 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/01/25 16:54:16 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/01/26 12:17:18 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void	get_char_tile(char m)
-// {
-// 	if (m == 'N')
-// 		data()->map->n += 1;
-// 	else if (m == 'S')
-// 		data()->map->s += 1;
-// 	else if (m == 'E')
-// 		data()->map->e += 1;
-// 	else if (m == 'W')
-// 		data()->map->w += 1;
-// }
+static int check_RGB_range(char **tmp)
+{
+    int i;
+    int t;
 
-// int check_multiples()
-// {
-//     if (data()->map->n == 0 && data()->map->s == 0 && data()->map->e ==0 &&
-//         data()->map->w == 0)
-//         return (1);
-//     if (data()->map->n > 1 || data()->map->s > 1 || data()->map->e > 1 ||
-//         data()->map->w > 1)
-//         return (1);
-//     if (data()->map->n == 1 && (data()->map->s >= 1 || data()->map->e >= 1 ||
-//         data()->map->w >= 1))
-//         return (1);
-//     if (data()->map->s == 1 && (data()->map->n >= 1 || data()->map->e >= 1 ||
-//         data()->map->w >= 1))
-//         return (1);    
-//     if (data()->map->e == 1 && (data()->map->s >= 1 || data()->map->n >= 1 ||
-//         data()->map->w >= 1))
-//         return (1);
-//     if (data()->map->w == 1 && (data()->map->s >= 1 || data()->map->e >= 1 ||
-//         data()->map->n >= 1))
-//         return (1);
-//     return (0);
-// }
+    i = 0;
+    t = 0;
+    while (i < 3)
+    {
+        t = ft_atoi(tmp[i]);
+        printf("check rgb range i = %d\n", t);
+        if (t < 0 || t > 255)
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+static int check_RGB_vals(char *f, char *c)
+{
+    char **tmp;
+
+    tmp = gc_split(f, ',');
+    if (!tmp)
+        error("couldn't split F or C line\n");
+    if (check_RGB_range(tmp))
+        return (1);
+    tmp = gc_split(c, ',');
+    if (check_RGB_range(tmp))
+        return (1);
+    return (0);
+}
+
+
+static int check_FC()
+{
+    char *fvals;
+    char *cvals;
+
+    fvals = NULL;
+    cvals = NULL;
+    if (data()->map->map[5][0] != 'F' || data()->map->map[6][0] != 'C')
+        error("F or C missing\n");
+    fvals = gc_strdup(data()->map->map[5] + 2);
+    cvals = gc_strdup(data()->map->map[6] + 2);
+    if (check_RGB_vals(fvals, cvals))
+        error("BAD RGB RANGE\n");
+    return (0);
+}
+
+static int check_textures_path()
+{
+    printf("TEXTURES PAAAAAAAAAAAAAAAAATH\n");
+    char *no;
+    char *so;
+    char *we;
+    char *ea;
+
+    no = gc_strdup(&data()->map->map[0][3]);
+    if (!no)
+        error("couldn't strdup no\n");
+    so = gc_strdup(&data()->map->map[1][3]);
+    if (!so)
+        error("couldn't strdup so\n");
+    we = gc_strdup(&data()->map->map[2][3]);
+    if (!we)
+        error("couldn't strdup we\n");
+    ea = gc_strdup(&data()->map->map[3][3]);
+    if (!ea)
+        error("couldn't strdup ea\n");
+
+    printf("NO = %s SE = %s WE = %s EA = %s\n", no, so, we, ea);
+    return (0);
+}
+
+int check_textures_order()
+{
+    printf("\n***********************************CHECK TEXTURES ORDER**********************************\n");
+    print_map(data()->map->map);
+
+    if (data()->map->map[0][0] != 'N' || data()->map->map[0][1] != 'O')
+        error("FIRST LINE MUST BE N FOLLOWED BY O THEN PATH\n");
+    if (data()->map->map[1][0] != 'S' || data()->map->map[1][1] != 'O')
+        error("SECOND LINE MUST BE S FOLLOWED BY O THEN PATH\n");
+    if (data()->map->map[2][0] != 'W' || data()->map->map[2][1] != 'E')
+        error("THIRD LINE MUST BE W FOLLOWED BY E THEN PATH\n");
+    if (data()->map->map[3][0] != 'E' || data()->map->map[3][1] != 'A')
+        error("FOURTH LINE MUST BE E FOLLOWED BY A THEN PATH\n");
+    if (check_textures_path())
+        error("path to textures are wrong\n");
+    if (check_FC())
+       printf("\n***********************************CHECK TEXTURES ORDER END**********************************\n\n\n");
+    return (0);
+}
 
 int	check_tiles()
 {
@@ -88,3 +148,64 @@ int	check_tiles()
     printf("MAP OK\n");
     return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// void	get_char_tile(char m)
+// {
+// 	if (m == 'N')
+// 		data()->map->n += 1;
+// 	else if (m == 'S')
+// 		data()->map->s += 1;
+// 	else if (m == 'E')
+// 		data()->map->e += 1;
+// 	else if (m == 'W')
+// 		data()->map->w += 1;
+// }
+
+// int check_multiples()
+// {
+//     if (data()->map->n == 0 && data()->map->s == 0 && data()->map->e ==0 &&
+//         data()->map->w == 0)
+//         return (1);
+//     if (data()->map->n > 1 || data()->map->s > 1 || data()->map->e > 1 ||
+//         data()->map->w > 1)
+//         return (1);
+//     if (data()->map->n == 1 && (data()->map->s >= 1 || data()->map->e >= 1 ||
+//         data()->map->w >= 1))
+//         return (1);
+//     if (data()->map->s == 1 && (data()->map->n >= 1 || data()->map->e >= 1 ||
+//         data()->map->w >= 1))
+//         return (1);    
+//     if (data()->map->e == 1 && (data()->map->s >= 1 || data()->map->n >= 1 ||
+//         data()->map->w >= 1))
+//         return (1);
+//     if (data()->map->w == 1 && (data()->map->s >= 1 || data()->map->e >= 1 ||
+//         data()->map->n >= 1))
+//         return (1);
+//     return (0);
+// }

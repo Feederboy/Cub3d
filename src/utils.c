@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerra <mguerra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 22:27:38 by mguerra           #+#    #+#             */
-/*   Updated: 2022/07/16 22:58:21 by mguerra          ###   ########.fr       */
+/*   Updated: 2023/01/26 14:47:16 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_data	*data(void)
 		data.setup = 1;
 		data.init = 0;
 		data.filename = NULL;
-		data.map = (t_map *)gc_malloc(sizeof(t_map *));
+		data.map = (t_map *)gc_malloc(sizeof(t_map));
 	}
 	return (&data);
 }

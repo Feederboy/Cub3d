@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:36:13 by matt              #+#    #+#             */
-/*   Updated: 2023/01/26 15:50:28 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/01/27 14:55:43 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ static char	**fill_map()
 	char *tmp;
 
 	fd = data()->fd;
-	printf("MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP ADDREEEEEEEEEEEEEEEEEEESS %p\n", data()->map);
 	data()->map->rows = get_nb_row() + 2;
-	printf("GETNBROW = %d\n", data()->map->rows);
 	clo_ope();
 	tmp = "";
 	i = 0;
@@ -113,17 +111,18 @@ int parsing_map(void)
 	print_map(data()->map->map);
 
 	clo_ope();
-	if (check_textures_order())
-		error("Textures given not good\n");
+	// if (check_textures_order())
+		// error("Textures given not good\n");
 	data()->map->map_split = split_map();
 	printf("\n\n\nSPLIT MAP PRINT\n");
 	print_map(data()->map->map_split);
 
-	check_tiles();
+	// check_tiles();
 	printf("**************** START FLOODFILL **********\n");
 	print_map(data()->map->map_split);
 	// floodfill(0, 0);
-	loop_open_walls(data()->map->map_split);
+	// loop_open_walls(data()->map->map_split);
+	check_map_surrounded();
 	printf("**************** END FLOODFILL **********\n");
 	print_map(data()->map->map_split);
 	close(data()->fd);

@@ -52,40 +52,140 @@
 //             floodfill(x,y-1,c,n);
 //     }
 // }
+// #include <stdio.h>
+
+// int	check_open_wall(char **array, int x, int y)
+// {
+// 	FILE *fp = fopen("res.txt", "a");
+// 	fprintf(fp, "[x = %d, y = %d]", x , y);
+	
+// 	if (y < 0 || x < 0 || !array[x] || (array[x] && !array[x][y]))
+// 		return (1);
+// 	else if (array[x][y] == '1')
+// 		return (0);
+// 	array[x][y] = '1';
+// 	// fprintf(fp, print_map(array));
+// 	return (check_open_wall(array, x - 1, y)
+// 		+ check_open_wall(array, x + 1, y)
+// 		+ check_open_wall(array, x, y - 1)
+// 		+ check_open_wall(array, x, y + 1));
+// }
 
 
-int	check_open_wall(char **array, int y, int x)
+// int	loop_open_walls(char **dup)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	while (dup[i])
+// 	{
+// 		j = 0;
+// 		while (dup[i][j])
+// 		{
+// 			// printf("i = %d    j = %d\n",i, j);
+// 			printf("+++++++++  x = %d, y = %d +++++\n", i, j);
+// 			if (dup[i][j] == '0' && check_open_wall(dup, i, j))
+// 			{
+// 				return (-1);
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+
+// static bool	floodfill(t_game *game, bool **filled_map, int i, int j)
+// {
+// 	bool	is_surrounded;
+
+// 	if (i < 0 || i >= game->map_row || j < 0 || j >= game->map_col)
+// 		return (false);
+// 	if (game->map[i][j] == '1' || filled_map[i][j] == true)
+// 		return (true);
+// 	else
+// 		filled_map[i][j] = true;
+// 	is_surrounded = true;
+// 	is_surrounded &= floodfill(game, filled_map, i - 1, j);
+// 	is_surrounded &= floodfill(game, filled_map, i + 1, j);
+// 	is_surrounded &= floodfill(game, filled_map, i, j - 1);
+// 	is_surrounded &= floodfill(game, filled_map, i, j + 1);
+// 	return (is_surrounded);
+// }
+
+// int			check_map_surrounded(t_game *game)
+// {
+// 	int		x;
+// 	int		y;
+// 	int		i;
+// 	bool	**filled_map;
+// 	bool	is_surrounded;
+
+// 	x = game->player.pos.x;
+// 	y = game->player.pos.y;
+// 	filled_map = ft_calloc(game->map_row + 1, sizeof(bool*));
+// 	i = 0;
+// 	while (i < game->map_row)
+// 	{
+// 		filled_map[i] = ft_calloc(game->map_col, sizeof(bool));
+// 		if (!filled_map[i])
+// 		{
+// 			free_ptrarr((void**)filled_map);
+// 			return (put_and_return_err("Malloc is failed"));
+// 		}
+// 		i++;
+// 	}
+// 	is_surrounded = floodfill(game, filled_map, y, x);
+// 	free_ptrarr((void**)filled_map);
+// 	if (!is_surrounded)
+// 		return (put_and_return_err("Map isn't surrounded by wall"));
+// 	return (0);
+// }
+
+static bool	floodfill(bool **filled_map, int i, int j)
 {
-	if (y < 0 || x < 0 || !array[y] || (array[y] && !array[y][x]))
-		return (1);
-	else if (array[y][x] == '1')
-		return (0);
-	array[y][x] = '1';
-	return (check_open_wall(array, y - 1, x)
-		+ check_open_wall(array, y + 1, x)
-		+ check_open_wall(array, y, x - 1)
-		+ check_open_wall(array, y, x + 1));
+	bool	is_surrounded;
+
+	if (i < 0 || i >= data()->map->rows || j < 0 || j >= data()->map->cols)
+		return (false);
+	if (data()->map->map_split[i][j] == '1' )//||filled_map[i][j] == true)
+		return (true);
+	else
+		filled_map[i][j] = true;
+	is_surrounded = true;
+	is_surrounded &= floodfill(filled_map, i + 1, j);
+	is_surrounded &= floodfill(filled_map, i, j - 1);
+	is_surrounded &= floodfill(filled_map, i, j + 1);
+	is_surrounded &= floodfill(filled_map, i - 1, j);
+	return (is_surrounded);
 }
 
-
-int	loop_open_walls(char **dup)
+int			check_map_surrounded()
 {
-	int	i;
-	int	j;
+	int		x;
+	int		y;
+	int		i;
+	bool	**filled_map;
+	bool	is_surrounded;
 
+	x = 1;
+	y = 1;
+	filled_map = ft_calloc(data()->map->rows + 1, sizeof(bool*));
 	i = 0;
-	while (dup[i])
+	while (i < data()->map->rows)
 	{
-		j = 0;
-		while (dup[i][j] != '\n')
+		filled_map[i] = ft_calloc(data()->map->cols, sizeof(bool));
+		if (!filled_map[i])
 		{
-			if (dup[i][j] == '0' && check_open_wall(dup, i, j))
-			{
-				return (-1);
-			}
-			j++;
+			error("fill_map calloc failed\n");
 		}
 		i++;
 	}
+	is_surrounded = floodfill(filled_map, y, x);
+	// free_ptrarr((void**)filled_map);
+	if (!is_surrounded)
+		error("Map not surrounded\n");
 	return (0);
 }

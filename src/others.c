@@ -7,7 +7,7 @@ void print_map(char **map)
 	printf("\n_____________PRINT MAP____________\n\n");
 	while (map[i])
 	{
-		printf("[%s", map[i]);
+		printf("%s", map[i]);
 		i++;
 	}
 	printf("\n--------------END PRINT MAP------------\n\n");

@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/01/26 15:46:49 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:20:05 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 # include <stdio.h>
 # include <unistd.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include "../lib/mlx/mlx.h"
 # include "../lib/libft/includes/libft.h"
@@ -74,9 +75,12 @@ int	parsing_map(void);
 int check_textures_order();
 int	check_tiles();
 /*parsing3.c*/
-int floodfill(int y, int x);
-int	loop_open_walls(char **dup);
-int	check_open_wall(char **array, int y, int x);
+int	check_map_surrounded();
+
+
+// int floodfill(int y, int x);
+// int	loop_open_walls(char **dup);
+// int	check_open_wall(char **array, int y, int x);
 
 
 void	init_map(void);

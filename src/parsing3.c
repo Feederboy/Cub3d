@@ -171,7 +171,6 @@ int			check_map_surrounded()
 	bool	**filled_map;
 	bool	is_surrounded;
 
-	printf("CHECK MAP SURROUNDED ROWS = %d   COLS = %d\nPLAYERPOSX = %d   POSY = %d\n", data()->map->rows, data()->map->cols, data()->map->player_posx, data()->map->player_posy);
 	filled_map = ft_calloc(data()->map->rows + 1, sizeof(bool*));
 	i = 0;
 	while (i < data()->map->rows)

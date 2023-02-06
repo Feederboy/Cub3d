@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 22:27:38 by mguerra           #+#    #+#             */
-/*   Updated: 2023/02/06 13:19:42 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:10:46 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int get_nb_row()
 
 int get_nb_row_splitted()
 {
+	printf("\n\n\n\n");
 	int len;
 	char *tmp;
 	int fd;
@@ -56,11 +57,10 @@ int get_nb_row_splitted()
 	clo_ope();
 	fd = data()->fd;
 	len = 1;
-	// tmp = "";
-	tmp = get_next_line(data()->fd);
+	tmp = get_next_line(fd);
 	while (tmp && (*tmp != '1' && *tmp != ' ' && *tmp != '0'))
 	{
-		tmp = get_next_line(data()->fd);
+		tmp = get_next_line(fd);
 	}
 	printf("GETNBROWSPLITTED TMP = %s\n", tmp);
 	while (tmp != NULL)
@@ -72,7 +72,9 @@ int get_nb_row_splitted()
 		len++;
 		free(tmp);
 	}
-	printf("GETNBROWSPLITTED = %d\n", len);
+	tmp = get_next_line(fd);
+
+	printf("GETNBROWSPLITTED = %d\n\n\n\n", len);
 	return (len);
 }
 
@@ -96,10 +98,6 @@ int get_nb_col_splitted()
 	}
 	printf("GETNBCOL TMP = %s\n", tmp);
 
-
-
-
-
 	while (tmp)
 	{
 		temp = 0;
@@ -108,7 +106,6 @@ int get_nb_col_splitted()
 		{
 			if (tmp[i] == ' ')
 				i++;
-			printf("TMP[%d] = %c\n", i, tmp[i]);
 			temp++;
 			i++;
 		}

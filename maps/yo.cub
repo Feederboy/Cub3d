@@ -1,27 +1,15 @@
-R 848 480
+NO ./path_to_the_north_texture
+SO ./path_to_the_south_texture
+WE ./path_to_the_west_texture
+EA ./path_to_the_east_texture
 
-NO textures/sky_1.xpm
+F 220,100,0
+C 225,30,0
 
-SO textures/sky_1.xpm
-
-WE textures/sky_1.xpm
-
-EA textures/sky_1.xpm
-
-S textures/sprite_1.xpm
-
-SU textures/sprite_2.xpm
-
-SC textures/sprite_3.xpm
-
-F 184,113,39
-
-C 51,198,227
-
-
-
-111
-1S1
-111
-
-
+111111111111111
+100000000000001
+100011111100001
+111000100001001
+1111N0100000001
+110000011111101
+111111111111111

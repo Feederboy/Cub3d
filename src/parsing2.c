@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/06 13:09:00 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:13:05 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,13 @@ int check_textures_order()
     printf("\n***********************************CHECK TEXTURES ORDER**********************************\n");
     print_map(data()->map->map);
 
+    // int i;
+    // int j;
+
+    // i = 0;
+    // j = 0;
+
+    // while (data()->map->map[0][0])
     if (data()->map->map[0][0] != 'N' || data()->map->map[0][1] != 'O')
         error("FIRST LINE MUST BE N FOLLOWED BY O THEN PATH\n");
     if (data()->map->map[1][0] != 'S' || data()->map->map[1][1] != 'O')

@@ -144,13 +144,16 @@
 // 	return (0);
 // }
 
+
+
+
 static bool	floodfill(bool **filled_map, int i, int j)
 {
 	bool	is_surrounded;
 
 	if (i < 0 || i >= data()->map->rows || j < 0 || j >= data()->map->cols)
 		return (false);
-	if (data()->map->map_split[i][j] == '1' )//||filled_map[i][j] == true)
+	if (data()->map->map_split[i][j] == '1' || filled_map[i][j] == true)
 		return (true);
 	else
 		filled_map[i][j] = true;
@@ -164,14 +167,11 @@ static bool	floodfill(bool **filled_map, int i, int j)
 
 int			check_map_surrounded()
 {
-	int		x;
-	int		y;
 	int		i;
 	bool	**filled_map;
 	bool	is_surrounded;
 
-	x = 1;
-	y = 1;
+	printf("CHECK MAP SURROUNDED ROWS = %d   COLS = %d\nPLAYERPOSX = %d   POSY = %d\n", data()->map->rows, data()->map->cols, data()->map->player_posx, data()->map->player_posy);
 	filled_map = ft_calloc(data()->map->rows + 1, sizeof(bool*));
 	i = 0;
 	while (i < data()->map->rows)
@@ -183,9 +183,10 @@ int			check_map_surrounded()
 		}
 		i++;
 	}
-	is_surrounded = floodfill(filled_map, y, x);
-	// free_ptrarr((void**)filled_map);
+	is_surrounded = floodfill(filled_map, data()->map->player_posx, data()->map->player_posy);
 	if (!is_surrounded)
 		error("Map not surrounded\n");
+	else
+		error("MAP IS SURROUNDED\n");
 	return (0);
 }

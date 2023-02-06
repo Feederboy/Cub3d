@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/01/27 12:20:05 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:53:38 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ typedef struct s_map
 	int	rows;
 	int	cols;
 	int	is_valid;
-	int n;
-	int s;
-	int e;
-	int w;
 	int card;
+	int	player_posx;
+	int	player_posy;
 	
 }	t_map;
 
@@ -71,11 +69,17 @@ t_data	*data(void);
 
 /*parsing.c*/
 int	parsing_map(void);
+void  clo_ope();
 /*parsing2.c*/
 int check_textures_order();
 int	check_tiles();
 /*parsing3.c*/
 int	check_map_surrounded();
+/*utils.c*/
+int	get_nb_row();
+// int	get_nb_col();
+int	get_nb_row_splitted();
+int	get_nb_col_splitted();
 
 
 // int floodfill(int y, int x);

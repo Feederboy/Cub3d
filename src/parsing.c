@@ -6,33 +6,13 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:36:13 by matt              #+#    #+#             */
-/*   Updated: 2023/01/27 14:55:43 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:05:03 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int get_nb_row()
-{
-	int len;
-	char *tmp;
-	int fd;
-
-	fd = data()->fd;
-	len = 0;
-	tmp = "";
-	while (tmp != NULL)
-	{
-		tmp = get_next_line(fd);
-		if (tmp == NULL)
-			break;
-		len++;
-		free(tmp);
-	}
-	return (len);
-}
-
-static void	clo_ope()
+void	clo_ope()
 {
 	close(data()->fd);
 	data()->fd = open(data()->filename, O_RDONLY);
@@ -76,7 +56,7 @@ static char	**split_map()
 	while (tmp && (*tmp != '1' && *tmp != ' ' && *tmp != '0'))
 	{
 		printf("TMPPPP = %c   TMPPPP+1 = %c\n", *tmp, *(tmp + 1));
-		tmp = get_next_line(data()->fd);
+		tmp = get_next_line(data()->fd); // FREEE TMPPPPPPPPP ????????????
 	}
 	while (tmp && *(tmp + 1) && (tmp[0]!= '1' && tmp[0] != '0' && tmp[0] != ' '))
 	{
@@ -102,6 +82,16 @@ static char	**split_map()
 	return (res);
 }
 
+static void	get_sizes()
+{
+	clo_ope();
+	data()->map->rows = get_nb_row_splitted();
+	data()->map->cols = get_nb_col_splitted();
+	printf("MAIN ROWS = %d   MAIN COLS = %d\n", data()->map->rows, data()->map->cols);
+}
+
+//LA MAP PEUT COMMENCER PAR DU VIDE ET AVOIR LES MURS DECALES VERS LA DROITE, PARSER EN ACCORD. VOIR MAP DU SUJET
+//FREE LES TMP DE GNL ??????????????????
 int parsing_map(void)
 {
 	data()->fd = open(data()->filename, O_RDONLY);
@@ -111,21 +101,21 @@ int parsing_map(void)
 	print_map(data()->map->map);
 
 	clo_ope();
-	// if (check_textures_order())
-		// error("Textures given not good\n");
+	if (check_textures_order())
+		error("Textures given not good\n");
 	data()->map->map_split = split_map();
 	printf("\n\n\nSPLIT MAP PRINT\n");
 	print_map(data()->map->map_split);
 
-	// check_tiles();
+	check_tiles();
 	printf("**************** START FLOODFILL **********\n");
 	print_map(data()->map->map_split);
-	// floodfill(0, 0);
-	// loop_open_walls(data()->map->map_split);
+	get_sizes();
 	check_map_surrounded();
 	printf("**************** END FLOODFILL **********\n");
 	print_map(data()->map->map_split);
 	close(data()->fd);
 	free_map(data()->map->map);
+	free_map(data()->map->map_split);
 	return (0);
 }

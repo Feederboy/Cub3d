@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/01/26 12:17:18 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:09:00 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,6 @@ int	check_tiles()
     map = data()->map->map_split;
     printf("\n\n\nCHECK TILES PRINT\n");
     print_map(data()->map->map_split);
-
-	data()->map->n = 0;
-	data()->map->s = 0;
-	data()->map->e = 0;
-	data()->map->w = 0;
 	i = 0;
 	while (map[i])
 	{
@@ -133,9 +128,17 @@ int	check_tiles()
 			if (ft_strchr("NSEW", map[i][j]))
             {
                 if (data()->map->card == 0)
+                {
                     data()->map->card = 1;
+                    data()->map->player_posx = i;
+                    data()->map->player_posy = j;
+                }
                 else
+                {
+                    printf("map[%d][%d] == %c\n", i, j, map[i][j]);
                     error("WRONG MAP CHECK DOUBLONS NSEW\n");
+
+                }
             }
             if (!ft_strchr("NSEW01 \n", map[i][j]))
                 error("TILE MISSING\n");

@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 22:27:38 by mguerra           #+#    #+#             */
-/*   Updated: 2023/02/08 12:42:04 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:06:25 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_data	*data(void)
 		data.ray = (t_ray *)gc_malloc(sizeof(t_ray));
 		data.p = (t_player *)gc_malloc(sizeof(t_player));
 		data.img = (t_img *)gc_malloc(sizeof(t_img));
+		data.move = (t_move *)gc_malloc(sizeof(t_move));
 	}
 	return (&data);
 }

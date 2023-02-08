@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/08 12:52:13 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:05:55 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,43 @@
 # define TEXHEIGHT 64
 # define WIDTH 960
 # define HEIGHT 720
+# define WALLDIST 1.1
 
 # define E 1
 # define W 2
 # define S 3
 # define N 4
 
-# define WALLDIST 1.1
+# define K_W 119
+# define K_A 97
+# define K_S 115
+# define K_D 100
+# define K_AR_L 65361
+# define K_AR_R 65363
+# define K_ESC 65307
 
 typedef struct s_vect
 {
 	double	x;
 	double	y;
 }	t_vect;
+
+typedef struct s_rgb
+{
+	int		r;
+	int		g;
+	int		b;
+}			t_rgb;
+
+typedef struct s_move
+{
+	int	key_w;
+	int	key_s;
+	int	key_a;
+	int	key_d;
+	int	arr_l;
+	int	arr_r;
+}			t_move;
 
 typedef struct s_map
 {
@@ -59,6 +83,18 @@ typedef struct s_map
 	int card;
 	int	player_posx;
 	int	player_posy;
+	char		**map;
+	char		*no_path;
+	char		*so_path;
+	char		*we_path;
+	char		*ea_path;
+	int			floor;
+	int			celling;
+	int			width;
+	int			height;
+	int			mcount;
+	int			start;
+	int			ret;
 	
 }	t_map;
 
@@ -121,6 +157,7 @@ typedef struct s_data
 	t_ray *ray;
 	t_player *p;
 	t_img *img;
+	t_move *move;
 
 	void		*mlx;
 	void		*win;

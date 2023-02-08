@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 22:27:38 by mguerra           #+#    #+#             */
-/*   Updated: 2023/02/06 16:10:46 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:03:19 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_data	*data(void)
 		data.init = 0;
 		data.filename = NULL;
 		data.map = (t_map *)gc_malloc(sizeof(t_map));
+		data.ray = (t_ray *)gc_malloc(sizeof(t_ray));
 	}
 	return (&data);
 }

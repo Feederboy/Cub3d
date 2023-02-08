@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:36:13 by matt              #+#    #+#             */
-/*   Updated: 2023/02/06 17:28:29 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/08 08:20:31 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,23 @@ static void	get_sizes()
 }
 
 //LA MAP PEUT COMMENCER PAR DU VIDE ET AVOIR LES MURS DECALES VERS LA DROITE, PARSER EN ACCORD. VOIR MAP DU SUJET (osef ? car on commence a partir du cardinal)
+
 //FREE LES TMP DE GNL ??????????????????
+
 //Mis à part la description de la map, chaque type d’élément peut être séparée
 //par une ou plusieurs lignes vides.
+
 //Sauf pour la map elle-même, les informations de chaque élément peuvent être
 //séparées par un ou plusieurs espace(s).
+
 //La description de la carte sera toujours en dernier dans le fichier, le reste des
 //éléments peut être dans n’importe quel ordre.
+
 //MAX MAP WIDTH ?
+
+//GNL NE PREND PAS LA DERNIERE LIGNE DU FICHIER, OBLIGE DE METTRE UN \n A LA FIN POUR AVOIR LA MAP ENTIERE
+
+//checker si les paths des images existent
 
 int parsing_map(void)
 {

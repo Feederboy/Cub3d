@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/06 12:53:38 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:33:08 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define ERR_MLX_INIT "Cannot init MLX, aborting."
 # define ERR_WIN_INIT "Cannot create a window, aborting."
 # define ESCAPE 65307
+
+# define TEXWIDTH 64
+# define TEXHEIGHT 64
+# define WIDTH 960
+# define HEIGHT 720
 
 typedef struct s_vect
 {
@@ -56,6 +61,7 @@ typedef struct s_data
 	char *filename;
 	int	fd;
 	t_map *map;
+	t_ray *ray;
 
 	void		*mlx;
 	void		*win;
@@ -64,27 +70,59 @@ typedef struct s_data
 
 }	t_data;
 
+typedef struct s_ray
+{
+	int		map_x;
+	int		map_y;
+	double	raydir_x;
+	double	raydir_y;
+	double	sidedist_x;
+	double	sidedist_y;
+	double	deltadist_x;
+	double	deltadist_y;
+	double	perpwalldist;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		tex_x;
+	int		tex_y;
+	int		line_h;
+	int		start;
+	int		end;
+	double	ratio;
+	double	texpos;
+}			t_ray;
+
 
 t_data	*data(void);
 
 /*parsing.c*/
+
 int	parsing_map(void);
 void  clo_ope();
 /*parsing2.c*/
+
 int check_textures_order();
 int	check_tiles();
+
 /*parsing3.c*/
 int	check_map_surrounded();
+
 /*utils.c*/
 int	get_nb_row();
 // int	get_nb_col();
 int	get_nb_row_splitted();
 int	get_nb_col_splitted();
 
+/*raycasting.c*/
+void	dda_calc(t_ray *ray, t_map *map);
+void	mapping_buff(t_ray *ray, t_player *p);
+void	set_buff(t_ray *ray, t_img *img, int x);
+void	raycasting(t_game *game);
 
-// int floodfill(int y, int x);
-// int	loop_open_walls(char **dup);
-// int	check_open_wall(char **array, int y, int x);
+/*raycasting2.c*/
+void	sidedist_init(t_ray *ray, t_player *p);
+void	ray_init(t_game *game, int x);
 
 
 void	init_map(void);

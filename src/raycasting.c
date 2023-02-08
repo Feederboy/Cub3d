@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:50:37 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/08 10:11:08 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:52:39 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 **	Or a square in y direction (stepY)
 **	When the ray has hit a wall,the loop end
 */
-void	dda_calc(t_ray *ray, t_map *map)
+void	dda_calc()
 {
 	int	hit;
 
 	hit = 0;
 	while (!hit)
 	{
-		if (ray->sidedist_x < data()->ray->sidedist_y)
+		if (data()->ray->sidedist_x < data()->ray->sidedist_y)
 		{
 			data()->ray->sidedist_x += data()->ray->deltadist_x;
 			data()->ray->map_x += data()->ray->step_x;
@@ -37,7 +37,7 @@ void	dda_calc(t_ray *ray, t_map *map)
 			data()->ray->map_y += data()->ray->step_y;
 			data()->ray->side = 1;
 		}
-		if (map->map[data()->ray->map_y][data()->ray->map_x] == '1')
+		if (data()->map->map_split[data()->ray->map_y][data()->ray->map_x] == '1')
 			hit = 1;
 	}
 	if (data()->ray->side == 0)
@@ -46,14 +46,14 @@ void	dda_calc(t_ray *ray, t_map *map)
 		data()->ray->perpwalldist = data()->ray->sidedist_y - data()->ray->deltadist_y;
 }
 
-void	mapping_buff(t_ray *ray, t_player *p)
+void	mapping_buff()
 {
 	double	wall;
 
 	if (data()->ray->side == 0)
-		wall = p->pos_y + (data()->ray->perpwalldist * data()->ray->raydir_y);
+		wall = data()->p->pos_y + (data()->ray->perpwalldist * data()->ray->raydir_y);
 	else
-		wall = p->pos_x + (data()->ray->perpwalldist * data()->ray->raydir_x);
+		wall = data()->p->pos_x + (data()->ray->perpwalldist * data()->ray->raydir_x);
 	wall = wall - floor(wall);
 	data()->ray->tex_x = (int)(wall * (double)TEXWIDTH);
 	if (data()->ray->side == 0 && data()->ray->raydir_x < 0)
@@ -71,7 +71,7 @@ void	mapping_buff(t_ray *ray, t_player *p)
 	data()->ray->texpos = (data()->ray->start - HEIGHT / 2 + data()->ray->line_h / 2) * data()->ray->ratio;
 }
 
-void	set_buff(t_ray *ray, t_img *img, int x)
+void	set_buff(int x)
 {
 	int		color;
 	int		y;
@@ -83,34 +83,34 @@ void	set_buff(t_ray *ray, t_img *img, int x)
 		if (data()->ray->side == 0)
 		{
 			if (data()->ray->raydir_x >= 0)
-				color = img->arr_img[E][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+				color = data()->img->arr_img[E][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
 			else
-				color = img->arr_img[W][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+				color = data()->img->arr_img[W][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
 		}
 		else if (data()->ray->side == 1)
 		{
 			if (data()->ray->raydir_y >= 0)
-				color = img->arr_img[S][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+				color = data()->img->arr_img[S][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
 			else
-				color = img->arr_img[N][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+				color = data()->img->arr_img[N][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
 		}
-		img->buffer[y][x] = color;
+		data()->img->buffer[y][x] = color;
 		data()->ray->texpos += data()->ray->ratio;
 		y++;
 	}
 }
 
-void	raycasting(t_game *game)
+void	raycasting()
 {
 	int	x;
 
 	x = 0;
 	while (x < WIDTH)
 	{
-		ray_init(game, x);
-		dda_calc(&game->ray, &game->map);
-		mapping_buff(&game->ray, &game->player);
-		set_buff(&game->ray, &game->img, x);
+		ray_init(x);
+		dda_calc();
+		mapping_buff();
+		set_buff(x);
 		x++;
 	}
 }

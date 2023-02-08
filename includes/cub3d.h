@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/08 10:33:08 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:52:13 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <math.h>
 # include "../lib/mlx/mlx.h"
 # include "../lib/libft/includes/libft.h"
 # include "../lib/libft/includes/ft_printf.h"
@@ -32,6 +33,13 @@
 # define TEXHEIGHT 64
 # define WIDTH 960
 # define HEIGHT 720
+
+# define E 1
+# define W 2
+# define S 3
+# define N 4
+
+# define WALLDIST 1.1
 
 typedef struct s_vect
 {
@@ -54,21 +62,18 @@ typedef struct s_map
 	
 }	t_map;
 
-typedef struct s_data
+typedef struct s_img
 {
-	int setup;
-	int init;
-	char *filename;
-	int	fd;
-	t_map *map;
-	t_ray *ray;
-
-	void		*mlx;
-	void		*win;
-	int			max_w;
-	int			max_h;
-
-}	t_data;
+	void		*img;
+	int			*data;
+	int			bpp;
+	int			line_size;
+	int			endian;
+	int			w;
+	int			h;
+	int			buffer[HEIGHT][WIDTH];
+	int			**arr_img;
+}				t_img;
 
 typedef struct s_ray
 {
@@ -93,6 +98,36 @@ typedef struct s_ray
 	double	texpos;
 }			t_ray;
 
+typedef struct s_player
+{
+	int			status;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+	double		move_speed;
+	double		rot_speed;
+}				t_player;
+
+typedef struct s_data
+{
+	int setup;
+	int init;
+	char *filename;
+	int	fd;
+	t_map *map;
+	t_ray *ray;
+	t_player *p;
+	t_img *img;
+
+	void		*mlx;
+	void		*win;
+	int			max_w;
+	int			max_h;
+
+}	t_data;
 
 t_data	*data(void);
 
@@ -115,14 +150,14 @@ int	get_nb_row_splitted();
 int	get_nb_col_splitted();
 
 /*raycasting.c*/
-void	dda_calc(t_ray *ray, t_map *map);
-void	mapping_buff(t_ray *ray, t_player *p);
-void	set_buff(t_ray *ray, t_img *img, int x);
-void	raycasting(t_game *game);
+void	dda_calc();
+void	mapping_buff();
+void	set_buff(int x);
+void	raycasting();
 
 /*raycasting2.c*/
-void	sidedist_init(t_ray *ray, t_player *p);
-void	ray_init(t_game *game, int x);
+void	sidedist_init();
+void	ray_init(int x);
 
 
 void	init_map(void);

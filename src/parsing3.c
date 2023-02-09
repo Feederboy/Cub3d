@@ -145,6 +145,42 @@
 // }
 
 
+// char	*check_direction_deep(char *line)
+// {
+// 	int		fd;
+// 	char	*rt;
+
+// 	rt = NULL;
+// 	line += 2;
+// 	while (ft_isspace(*line))
+// 		line++;
+// 	fd = open(line, O_RDONLY);
+// 	if (fd == -1)
+// 		return (NULL);
+// 	close(fd);
+// 	rt = ft_strdup(line);
+// 	return (rt);
+// }
+
+// int	check_direction(t_map *map, char *line, char c)
+// {
+// 	char	*tmp;
+
+// 	tmp = check_direction_deep(line);
+// 	if (!tmp)
+// 		return (0);
+// 	if (c == 'N' && map->no_path == NULL)
+// 		map->no_path = tmp;
+// 	else if (c == 'S' && map->so_path == NULL)
+// 		map->so_path = tmp;
+// 	else if (c == 'W' && map->we_path == NULL)
+// 		map->we_path = tmp;
+// 	else if (c == 'E' && map->ea_path == NULL)
+// 		map->ea_path = tmp;
+// 	else
+// 		ft_exit("Problemes NWSE \n", map, line);
+// 	return (1);
+// }
 
 
 static bool	floodfill(bool **filled_map, int i, int j)

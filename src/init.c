@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:00:39 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/09 11:44:54 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:43:53 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	init_map()
 	data()->map->floor = -1;
 	data()->map->celling = -1;
 	data()->map->mapp = NULL;
-	data()->map->height = 0;
-	data()->map->width = 0;
+	data()->map->height = HEIGHT;
+	data()->map->width = WIDTH;
 	data()->map->mcount = 0;
 	data()->map->start = 0;
 	// data()->map->ret = 1;
@@ -59,6 +59,7 @@ void	init_map()
 
 void	init_img()
 {
+	printf("INIT IMG\n");
 	data()->img->img = NULL;
 	data()->img->data = NULL;
 	data()->img->bpp = 0;

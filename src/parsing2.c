@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/09 11:47:52 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 12:28:34 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,20 @@ static int check_FC()
 
 static int check_textures_path()
 {
-    // printf("TEXTURES PAAAAAAAAAAAAAAAAATH\n");
-    char *no;
-    char *so;
-    char *we;
-    char *ea;
-
-    no = gc_strdup(&data()->map->map[0][3]);
-    if (!no)
+    data()->map->no_path = gc_strdup(&data()->map->map[0][3]);
+    if (!data()->map->no_path)
         error("couldn't strdup no\n");
-    so = gc_strdup(&data()->map->map[1][3]);
-    if (!so)
+    data()->map->so_path = gc_strdup(&data()->map->map[1][3]);
+    if (!data()->map->so_path)
         error("couldn't strdup so\n");
-    we = gc_strdup(&data()->map->map[2][3]);
-    if (!we)
+    data()->map->we_path = gc_strdup(&data()->map->map[2][3]);
+    if (!data()->map->we_path)
         error("couldn't strdup we\n");
-    ea = gc_strdup(&data()->map->map[3][3]);
-    if (!ea)
+    data()->map->ea_path = gc_strdup(&data()->map->map[3][3]);
+    if (!data()->map->ea_path)
         error("couldn't strdup ea\n");
 
-    printf("NO = %s SE = %s WE = %s EA = %s\n", no, so, we, ea);
+    printf("NO = %s SE = %s WE = %s EA = %s\n", data()->map->no_path, data()->map->so_path, data()->map->we_path, data()->map->ea_path);
     return (0);
 }
 

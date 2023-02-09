@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/09 11:51:35 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:18:31 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void	sidedist_init();
 void	ray_init(int x);
 
 /*game.c*/
+void	init_image();
 void	fill_arr_img(int i);
 void	load_img();
 void	game_start();

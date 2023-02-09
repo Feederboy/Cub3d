@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/01/26 14:45:32 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:20:04 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ int main(int ac, char **av)
 		error("something went wrong with the map\n");
 	else
 	{
+		game_start();
 	// init_map();
 	// end_game(1);
 	}
+	return (0);
 }

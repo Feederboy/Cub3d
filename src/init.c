@@ -6,11 +6,40 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:00:39 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/08 13:05:17 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:44:54 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	init_player()
+{
+	data()->p->dir_x = 0;
+	data()->p->dir_y = 0;
+	if (data()->p->status == N)
+	{
+		data()->p->dir_y = -1;
+		data()->p->plane_x = 0.66;
+	}
+	else if (data()->p->status == S)
+	{
+		data()->p->dir_y = 1;
+		data()->p->plane_x = -0.66;
+	}
+	else if (data()->p->status == W)
+	{
+		data()->p->dir_x = -1;
+		data()->p->plane_y = -0.66;
+	}
+	else
+	{
+		data()->p->dir_x = 1;
+		data()->p->plane_y = 0.66;
+	}
+	data()->p->move_speed = 0.05;
+	data()->p->rot_speed = 0.05;
+}
+
 
 void	init_map()
 {
@@ -20,12 +49,12 @@ void	init_map()
 	data()->map->ea_path = NULL;
 	data()->map->floor = -1;
 	data()->map->celling = -1;
-	data()->map->map = NULL;
+	data()->map->mapp = NULL;
 	data()->map->height = 0;
 	data()->map->width = 0;
 	data()->map->mcount = 0;
 	data()->map->start = 0;
-	data()->map->ret = 1;
+	// data()->map->ret = 1;
 }
 
 void	init_img()

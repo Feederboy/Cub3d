@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:36:13 by matt              #+#    #+#             */
-/*   Updated: 2023/02/08 08:20:31 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:53:18 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ static void	get_sizes()
 
 //checker si les paths des images existent
 
+//virer les return et mettre les fonctions en void car on renvoit des error en cas de problem
+
 int parsing_map(void)
 {
 	data()->fd = open(data()->filename, O_RDONLY);
@@ -131,8 +133,8 @@ int parsing_map(void)
 	check_map_surrounded();
 	printf("**************** END FLOODFILL **********\n");
 	print_map(data()->map->map_split);
-	close(data()->fd);
-	free_map(data()->map->map);
-	free_map(data()->map->map_split);
+	// close(data()->fd);
+	// free_map(data()->map->map);
+	// free_map(data()->map->map_split);
 	return (0);
 }

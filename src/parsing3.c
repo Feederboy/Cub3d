@@ -165,7 +165,7 @@ static bool	floodfill(bool **filled_map, int i, int j)
 	return (is_surrounded);
 }
 
-int			check_map_surrounded()
+void		check_map_surrounded()
 {
 	int		i;
 	bool	**filled_map;
@@ -186,6 +186,6 @@ int			check_map_surrounded()
 	if (!is_surrounded)
 		error("Map not surrounded\n");
 	else
-		error("MAP IS SURROUNDED\n");
-	return (0);
+		printf("MAP IS SURROUNDED\n");
+
 }

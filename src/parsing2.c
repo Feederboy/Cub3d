@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/06 17:13:05 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:47:52 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int check_FC()
 
 static int check_textures_path()
 {
-    printf("TEXTURES PAAAAAAAAAAAAAAAAATH\n");
+    // printf("TEXTURES PAAAAAAAAAAAAAAAAATH\n");
     char *no;
     char *so;
     char *we;

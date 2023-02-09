@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/08 13:05:55 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:51:35 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_map
 	int card;
 	int	player_posx;
 	int	player_posy;
-	char		**map;
+	char		**mapp;
 	char		*no_path;
 	char		*so_path;
 	char		*we_path;
@@ -94,7 +94,7 @@ typedef struct s_map
 	int			height;
 	int			mcount;
 	int			start;
-	int			ret;
+	// int			ret;
 	
 }	t_map;
 
@@ -178,7 +178,7 @@ int check_textures_order();
 int	check_tiles();
 
 /*parsing3.c*/
-int	check_map_surrounded();
+void	check_map_surrounded();
 
 /*utils.c*/
 int	get_nb_row();
@@ -196,8 +196,17 @@ void	raycasting();
 void	sidedist_init();
 void	ray_init(int x);
 
+/*game.c*/
+void	fill_arr_img(int i);
+void	load_img();
+void	game_start();
 
-void	init_map(void);
+/*init.c*/
+void	init_player();
+void	init_map();
+void	init_img();
+void	init_move();
+
 
 void print_map(char **map);
 void error(char *msg);

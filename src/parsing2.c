@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/09 12:28:34 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:38:41 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ static int check_RGB_vals(char *f, char *c)
     tmp = gc_split(c, ',');
     if (check_RGB_range(tmp))
         return (1);
+    if (c == 'F' && map->floor == -1)
+	{
+		map->floor = (rgb.r << 16 | rgb.g << 8 | rgb.b);
+	}
+	else if (c == 'C' && map->celling == -1)
+	{
+		map->celling = (rgb.r << 16 | rgb.g << 8 | rgb.b);
+	}
     return (0);
 }
 
@@ -62,20 +70,37 @@ static int check_FC()
     return (0);
 }
 
+char    *trim_newline(char *str)
+{
+    int     i;
+    
+    i = 0;
+    while (str[i + 1])
+        i++;
+    if (str[i] == '\n' && str[i + 1] == '\0')
+        str[i] = '\0';
+    return str;
+}
+
 static int check_textures_path()
 {
     data()->map->no_path = gc_strdup(&data()->map->map[0][3]);
     if (!data()->map->no_path)
         error("couldn't strdup no\n");
-    data()->map->so_path = gc_strdup(&data()->map->map[1][3]);
-    if (!data()->map->so_path)
-        error("couldn't strdup so\n");
-    data()->map->we_path = gc_strdup(&data()->map->map[2][3]);
-    if (!data()->map->we_path)
-        error("couldn't strdup we\n");
-    data()->map->ea_path = gc_strdup(&data()->map->map[3][3]);
+    data()->map->no_path = trim_newline(data()->map->no_path);
+    data()->map->ea_path = gc_strdup(&data()->map->map[0][3]);
     if (!data()->map->ea_path)
-        error("couldn't strdup ea\n");
+        error("couldn't strdup no\n");
+    data()->map->ea_path = trim_newline(data()->map->ea_path);
+    data()->map->so_path = gc_strdup(&data()->map->map[0][3]);
+    if (!data()->map->so_path)
+        error("couldn't strdup no\n");
+    data()->map->so_path = trim_newline(data()->map->so_path);
+    data()->map->we_path = gc_strdup(&data()->map->map[0][3]);
+    if (!data()->map->we_path)
+        error("couldn't strdup no\n");
+    data()->map->we_path = trim_newline(data()->map->we_path);
+ 
 
     printf("NO = %s SE = %s WE = %s EA = %s\n", data()->map->no_path, data()->map->so_path, data()->map->we_path, data()->map->ea_path);
     return (0);

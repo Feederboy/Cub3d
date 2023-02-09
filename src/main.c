@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/09 13:11:59 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:19:05 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void check_arguments(int ac, char **av)
 
 int main(int ac, char **av)
 {
+	// t_data dat;
 	check_arguments(ac, av);
 	data()->filename = av[1];
 	data()->fd = open(data()->filename, O_RDONLY);
@@ -65,6 +66,15 @@ int main(int ac, char **av)
 	else
 	{
 		game_start();
+		data()->img->img = mlx_new_image(data()->mlx, WIDTH, HEIGHT);
+		data()->img->data = (int *)mlx_get_data_addr(data()->img->img, &data()->img->bpp,
+				&data()->img->line_size, &data()->img->endian);
+		mlx_hook(data()->win, 17, 0, &ft_close, &data);
+		mlx_hook(data()->win, 2, 1L << 0, &key_press, &data);
+		mlx_hook(data()->win, 2, 1L << 0, &key_release, &data);
+		mlx_loop_hook(data()->mlx, &game_loop, &data);
+		mlx_loop(data()->mlx);
+		// ft_close(game.mlx);
 	}
 	return (0);
 }

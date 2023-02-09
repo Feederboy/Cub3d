@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:36:13 by matt              #+#    #+#             */
-/*   Updated: 2023/02/09 11:53:18 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:39:39 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ static void	get_sizes()
 //checker si les paths des images existent
 
 //virer les return et mettre les fonctions en void car on renvoit des error en cas de problem
+
+//donner couleurs au sol et ciel grace au bit shfiting voir parsing2.c
 
 int parsing_map(void)
 {

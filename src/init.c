@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:00:39 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/09 13:43:53 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 14:19:23 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	init_img()
 	data()->img->bpp = 0;
 	data()->img->line_size = 0;
 	data()->img->endian = 0;
+	// data()->img->h = 64;
+	// data()->img->w = 64;
 	data()->img->arr_img = NULL;
 }
 

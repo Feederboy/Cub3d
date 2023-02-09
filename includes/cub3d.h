@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/09 13:18:31 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:38:05 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,6 @@ typedef struct s_vect
 
 typedef struct s_rgb
 {
-	int		r;
-	int		g;
-	int		b;
 }			t_rgb;
 
 typedef struct s_move
@@ -90,6 +87,9 @@ typedef struct s_map
 	char		*ea_path;
 	int			floor;
 	int			celling;
+	int			r;
+	int			g;
+	int			b;
 	int			width;
 	int			height;
 	int			mcount;
@@ -159,6 +159,7 @@ typedef struct s_data
 	t_img *img;
 	t_move *move;
 
+
 	void		*mlx;
 	void		*win;
 	int			max_w;
@@ -207,6 +208,25 @@ void	init_player();
 void	init_map();
 void	init_img();
 void	init_move();
+
+/*hooks.c*/
+int	game_loop();
+int	key_press(int keycode);
+int	key_release(int keycode);
+int	ft_close();
+
+/*keys.c*/
+void	key_arrow_left();
+void	key_arrow_right();
+void	key_w();
+void	key_s();
+void	key_a();
+void	key_d();
+int	key_hook();
+
+/*render.c*/
+void	paint_floor();
+void	paint_img();
 
 
 void print_map(char **map);

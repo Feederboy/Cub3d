@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:20:17 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/09 13:48:59 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:09:18 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_image()
 	int	j;
 
 	printf("INIT IMAGE\n");
-	init_img(data()->img);
+	init_img();
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -76,11 +76,7 @@ void	load_img()
 			path = data()->map->so_path;
 		else
 			path = data()->map->no_path;
-		printf("PATH = %s\n", path);
-		
-		data()->img->img = mlx_xpm_file_to_image(data()->mlx, path, &data()->img->w, &data()->img->h); // ca deconne ici h et w sont a zero notemment 
-		printf("NO = %s SE = %s WE = %s EA = %s\n", data()->map->no_path, data()->map->so_path, data()->map->we_path, data()->map->ea_path);
-		printf("TEWIDTH = %d   TEHEIH = %d  imgw = %d  imgh = %d imgimg = %p\n",TEXWIDTH, TEXHEIGHT, data()->img->w, data()->img->h,data()->img->img);
+		data()->img->img = mlx_xpm_file_to_image(data()->mlx, path, &data()->img->w, &data()->img->h); 
 		if (data()->img->w != TEXWIDTH || data()->img->h != TEXHEIGHT
 			|| data()->img->img == NULL)
 			error("XPM images problem\n");

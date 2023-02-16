@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/09 16:38:05 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:07:28 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,10 @@ typedef struct s_data
 }	t_data;
 
 t_data	*data(void);
+
+
+/*main.c*/
+
 
 /*parsing.c*/
 

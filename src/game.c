@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:20:17 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/09 15:09:18 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:31:30 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_image()
 
 	printf("INIT IMAGE\n");
 	init_img();
+	printf("INIT IMAGE2\n");
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -27,9 +28,11 @@ void	init_image()
 			data()->img->buffer[i][j++] = 0;
 		i++;
 	}
+	printf("INIT IMAGE3\n");
 	data()->img->arr_img = (int **)malloc(5 * sizeof(int *));
 	if (!data()->img->arr_img)
 		error("malloc img fail\n");
+	printf("INIT IMAGE4\n");
 	i = 0;
 	while (i < 5)
 	{
@@ -39,6 +42,7 @@ void	init_image()
 		ft_memset(data()->img->arr_img[i], 0, (sizeof(int) * TEXWIDTH * TEXHEIGHT));
 		i++;
 	}
+	printf("INIT IMAGE5\n");
 }
 
 void	fill_arr_img(int i)
@@ -65,6 +69,7 @@ void	load_img()
 	char	*path;
 	int		i;
 
+	printf("LOAD IMAGE1\n");
 	i = 1;
 	while (i < 5)
 	{
@@ -86,6 +91,7 @@ void	load_img()
 		mlx_destroy_image(data()->mlx, data()->img->img);
 		i++;
 	}
+	printf("LOAD IMAGE2\n");
 }
 
 void    game_start()

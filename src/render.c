@@ -4,19 +4,15 @@ void	paint_floor()
 {
 	int	i;
 	int	j;
-	int	celling;
-	int	floor;
 
 	i = 0;
-	celling = data()->map->celling; //A DEFINIR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	floor = data()->map->floor;
 	while (i < HEIGHT / 2)
 	{
 		j = 0;
 		while (j < WIDTH)
 		{
-			data()->img->buffer[i][j] = celling;
-			data()->img->buffer[HEIGHT - i - 1][j] = floor;
+			data()->img->buffer[i][j] = data()->map->celling;
+			data()->img->buffer[HEIGHT - i - 1][j] = data()->map->floor;
 			j++;
 		}
 		i++;

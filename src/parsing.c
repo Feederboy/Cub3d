@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:36:13 by matt              #+#    #+#             */
-/*   Updated: 2023/02/09 16:39:39 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:17:53 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ static void	get_sizes()
 
 //virer les return et mettre les fonctions en void car on renvoit des error en cas de problem
 
-//donner couleurs au sol et ciel grace au bit shfiting voir parsing2.c
+//donner couleurs au sol et ciel grace au bit shfiting voir parsing2.c DONE A PRIORI
+
+//EXIT GAME A COMPLETER POUR FREE TOUT CE QUIL Y A Q FREE
 
 int parsing_map(void)
 {

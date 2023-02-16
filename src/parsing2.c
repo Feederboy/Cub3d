@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/16 12:46:49 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:03:06 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,31 @@
 //     return (0);
 // }
 
+char    *trim_newline(char *str)
+{
+    int     i;
+    
+    i = 0;
+    while (str[i + 1])
+        i++;
+    if (str[i] == '\n' && str[i + 1] == '\0')
+        str[i] = '\0';
+    return str;
+}
+
+static void check_digit(char *tmp)
+{
+    int j;
+
+    j = 0;
+    while (tmp[j])
+    {
+        if (!ft_isdigit(tmp[j]))
+            error("wrong format");        
+        j++;   
+    }
+}
+
 static int check_RGB_range(char **tmp)
 {
     int i;
@@ -82,14 +107,24 @@ static int check_RGB_range(char **tmp)
     t = 0;
     while (i < 3)
     {
-        if (!ft_isdigit(tmp[i]))
-            error("wrong format");        
+        trim_newline(tmp[i]);
+        printf("CHECK RGB RRANGE = %s ------------- \n", tmp[i]);
+  
+        check_digit(tmp[i]);
         t = ft_atoi(tmp[i]);
         printf("check rgb range i = %d\n", t);
         if (t < 0 || t > 255)
             return (1);
+        if (i == 0)
+            data()->map->r = t;
+        else if (i == 1)
+            data()->map->g = t;
+        else
+            data()->map->b = t;
         i++;
     }
+    
+    printf("R = %d  G = %d  B = %d\n", data()->map->r, data()->map->g, data()->map->b);
     return (0);
 }
 
@@ -102,9 +137,11 @@ static int check_RGB_vals(char *f, char *c)
         error("couldn't split F or C line\n");
     if (check_RGB_range(tmp))
         return (1);
+    data()->map->floor = (data()->map->r << 16 | data()->map->g << 8 | data()->map->b);
     tmp = gc_split(c, ',');
     if (check_RGB_range(tmp))
         return (1);
+    data()->map->celling = (data()->map->r << 16 | data()->map->g << 8 | data()->map->b);
     return (0);
 }
 
@@ -125,17 +162,6 @@ static int check_FC()
 }
 
 
-char    *trim_newline(char *str)
-{
-    int     i;
-    
-    i = 0;
-    while (str[i + 1])
-        i++;
-    if (str[i] == '\n' && str[i + 1] == '\0')
-        str[i] = '\0';
-    return str;
-}
 
 static int check_textures_path()
 {

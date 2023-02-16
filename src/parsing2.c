@@ -6,11 +6,72 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 00:57:09 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/09 16:38:41 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:46:49 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// static int check_RGB_range(char *fvals, char *cvals)
+// {
+//     int i;
+//     int t;
+
+//     i = 0;
+//     t = 0;
+//     while (i < 3)
+//     {
+//         t = ft_atoi(tmp[i]);
+//         printf("check rgb range i = %d\n", t);
+//         if (t < 0 || t > 255)
+//             return (1);
+//         i++;
+//     }
+//     return (0);
+// }
+
+// static int check_RGB_vals(char *f, char *c)
+// {
+//     char **tmp;
+
+//     tmp = gc_split(f, ',');
+//     if (!tmp)
+//         error("couldn't split F or C line\n");
+//     if (check_RGB_range(tmp))
+//         error("RBG range must be [0, 255]\n");
+//     tmp = gc_split(c, ',');
+//     if (check_RGB_range(tmp))
+//         return (1);
+//     if (c == 'F' && map->floor == -1)
+// 	{
+// 		map->floor = (rgb.r << 16 | rgb.g << 8 | rgb.b);
+// 	}
+// 	else if (c == 'C' && map->celling == -1)
+// 	{
+// 		map->celling = (rgb.r << 16 | rgb.g << 8 | rgb.b);
+// 	}
+//     return (0);
+// }
+
+
+
+// static int check_FC()
+// {
+//     char *fvals;
+//     char *cvals;
+
+//     fvals = NULL;
+//     cvals = NULL;
+//     if (data()->map->map[5][0] != 'F' || data()->map->map[6][0] != 'C')
+//         error("F or C missing\n");
+//     fvals = gc_strdup(data()->map->map[5] + 2);
+//     cvals = gc_strdup(data()->map->map[6] + 2);
+//     printf("FVALS = %s    CVALS = %s\n", fvals, cvals);
+//     // if (check_RGB_vals(fvals, cvals))
+//         // error("BAD RGB RANGE\n");
+    
+//     return (0);
+// }
 
 static int check_RGB_range(char **tmp)
 {
@@ -21,6 +82,8 @@ static int check_RGB_range(char **tmp)
     t = 0;
     while (i < 3)
     {
+        if (!ft_isdigit(tmp[i]))
+            error("wrong format");        
         t = ft_atoi(tmp[i]);
         printf("check rgb range i = %d\n", t);
         if (t < 0 || t > 255)
@@ -42,17 +105,8 @@ static int check_RGB_vals(char *f, char *c)
     tmp = gc_split(c, ',');
     if (check_RGB_range(tmp))
         return (1);
-    if (c == 'F' && map->floor == -1)
-	{
-		map->floor = (rgb.r << 16 | rgb.g << 8 | rgb.b);
-	}
-	else if (c == 'C' && map->celling == -1)
-	{
-		map->celling = (rgb.r << 16 | rgb.g << 8 | rgb.b);
-	}
     return (0);
 }
-
 
 static int check_FC()
 {
@@ -69,6 +123,7 @@ static int check_FC()
         error("BAD RGB RANGE\n");
     return (0);
 }
+
 
 char    *trim_newline(char *str)
 {

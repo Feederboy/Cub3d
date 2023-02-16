@@ -6,7 +6,7 @@
 /*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#             */
-/*   Updated: 2023/02/09 16:19:05 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:04:27 by maquentr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	end_game(int exit_code)
 	exit(exit_code);
 	return (0);
 }
+
 void error(char *msg)
 {
 	ft_printf_fd(2, "Error\n%s\n", msg);

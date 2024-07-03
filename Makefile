@@ -6,14 +6,16 @@
 #    By: mguerra <mguerra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/06 23:40:58 by ykeciri           #+#    #+#              #
-#    Updated: 2022/07/16 21:38:29 by mguerra          ###   ########.fr        #
+#    Updated: 2023/02/16 14:39:29 by mguerra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 SRC_DIR = src
 OBJ_DIR = obj
-SRC = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/*.c)
+SRC = src/end.c src/init.c src/raycasting.c src/main.c \
+src/keyboard.c src/image.c src/raycasting2.c src/hook.c \
+src/parsing.c src/player.c
 OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 DEP = $(OBJ:.o=.d)
 CC = clang

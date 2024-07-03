@@ -6,119 +6,146 @@
 /*   By: mguerra <mguerra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:46:08 by mguerra           #+#    #+#             */
-/*   Updated: 2022/05/21 01:50:34 by mguerra          ###   ########.fr       */
+/*   Updated: 2023/02/17 16:27:02 by mguerra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-static char	*gc_gnl_strjoin(char *s1, char *s2)
+/* Adds the content of our buffer to the end of our stash */
+
+void	gc_add_to_stash(t_clist **stash, char *buf, int readed)
 {
-	char	*res;
+	int		i;
+	t_clist	*last;
+	t_clist	*new_node;
+
+	new_node = gc_malloc(sizeof(t_clist));
+	if (new_node == NULL)
+		return ;
+	new_node->next = NULL;
+	new_node->content = gc_malloc(sizeof(char) * (readed + 1));
+	if (new_node->content == NULL)
+		return ;
+	i = 0;
+	while (buf[i] && i < readed)
+	{
+		new_node->content[i] = buf[i];
+		i++;
+	}
+	new_node->content[i] = '\0';
+	if (*stash == NULL)
+	{
+		*stash = new_node;
+		return ;
+	}
+	last = gc_ft_lst_get_last(*stash);
+	last->next = new_node;
+}
+
+/* Uses read() to add characters to the stash */
+
+void	gc_read_and_stash(int fd, t_clist **stash)
+{
+	char	*buf;
+	int		readed;
+
+	readed = 1;
+	while (!gc_found_newline(*stash) && readed != 0)
+	{
+		buf = gc_malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buf == NULL)
+			return ;
+		readed = (int)read(fd, buf, BUFFER_SIZE);
+		if ((*stash == NULL && readed == 0) || readed == -1)
+		{
+			return ;
+		}
+		buf[readed] = '\0';
+		gc_add_to_stash(stash, buf, readed);
+	}
+}
+
+/* Extracts all characters from our stash and stores them in out line.
+ * stopping after the first \n it encounters */
+
+void	gc_extract_line(t_clist *stash, char **line)
+{
+	int	i;
+	int	j;
+
+	if (stash == NULL)
+		return ;
+	gc_generate_line(line, stash);
+	if (*line == NULL)
+		return ;
+	j = 0;
+	while (stash)
+	{
+		i = 0;
+		while (stash->content[i])
+		{
+			if (stash->content[i] == '\n')
+			{
+				(*line)[j++] = stash->content[i];
+				break ;
+			}
+			(*line)[j++] = stash->content[i++];
+		}
+		stash = stash->next;
+	}
+	(*line)[j] = '\0';
+}
+
+/* After extracting the line that was read, we don't need those characters
+ * anymore. This function clears the stash so only the characters that have
+ * not been returned at the end of get_next_line remain in our static stash. */
+
+void	gc_clean_stash(t_clist **stash)
+{
+	t_clist	*last;
+	t_clist	*clean_node;
 	int		i;
 	int		j;
 
-	if (!s1)
-	{
-		s1 = (char *)gc_malloc(sizeof(char) * 1);
-		s1[0] = '\0';
-	}
-	if (!s1 || !s2)
-		return (NULL);
-	res = (char *)gc_malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
+	clean_node = gc_malloc(sizeof(t_clist));
+	if (stash == NULL || clean_node == NULL)
+		return ;
+	clean_node->next = NULL;
+	last = gc_ft_lst_get_last(*stash);
 	i = 0;
-	j = 0;
-	while (s1[j])
-		res[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-	return (res);
-}
-
-static char	*gc_read_until_new_line(int fd, char *str)
-{
-	int		rb;
-	char	*buffer;
-
-	rb = 42;
-	buffer = gc_malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	while (!ft_has_char(str, '\n') && rb != 0)
-	{
-		rb = read(fd, buffer, BUFFER_SIZE);
-		if (rb == -1)
-			return (NULL);
-		buffer[rb] = '\0';
-		if (buffer[0] == '\0')
-			return (NULL);
-		str = gc_gnl_strjoin(str, buffer);
-	}
-	return (str);
-}
-
-static char	*gc_dup_until_new_line(char *str)
-{
-	int		i;
-	char	*line;
-
-	i = 0;
-	if (!str[i])
-		return (NULL);
-	while (str[i] && str[i] != '\n')
+	while (last->content[i] && last->content[i] != '\n')
 		i++;
-	line = (char *)gc_malloc(sizeof(char) * (i + 2));
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-	{
-		line[i] = str[i];
+	if (last->content && last->content[i] == '\n')
 		i++;
-	}
-	if (str[i] == '\n')
-		line[i++] = '\n';
-	line[i] = '\0';
-	return (line);
-}
-
-static char	*gc_get_remaining(char *str)
-{
-	int		i;
-	int		j;
-	char	*line;
-
-	i = 0;
+	clean_node->content = gc_malloc(sizeof(char) * \
+		((ft_strlen(last->content) - i) + 1));
+	if (clean_node->content == NULL)
+		return ;
 	j = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (!str[i])
-		return (NULL);
-	line = (char *)gc_malloc(sizeof(char) * (ft_strlen(str) - i + 1));
-	if (!line)
-		return (NULL);
-	i++;
-	while (str[i])
-		line[j++] = str[i++];
-	line[j] = '\0';
-	return (line);
+	while (last->content[i])
+		clean_node->content[j++] = last->content[i++];
+	clean_node->content[j] = '\0';
+	*stash = clean_node;
 }
 
 char	*gc_get_next_line(int fd)
 {
-	static char	*remaining[1024];
-	char		*line;
+	static t_clist	*stash = NULL;
+	char			*line;
 
-	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
-		return (0);
-	remaining[fd] = gc_read_until_new_line(fd, remaining[fd]);
-	if (!remaining[fd])
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (NULL);
-	line = gc_dup_until_new_line(remaining[fd]);
-	remaining[fd] = gc_get_remaining(remaining[fd]);
+	line = NULL;
+	gc_read_and_stash(fd, &stash);
+	if (stash == NULL)
+		return (NULL);
+	gc_extract_line(stash, &line);
+	gc_clean_stash(&stash);
+	if (line[0] == '\0')
+	{
+		stash = NULL;
+		return (NULL);
+	}
 	return (line);
 }

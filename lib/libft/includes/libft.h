@@ -133,4 +133,21 @@ void		*gc_malloc(size_t size);
 void		*gc_malloc_group(size_t size, int group);
 void		gc_clear(void);
 char		*gc_strreplace(char *search, char *replace, char *str);
+
+typedef struct s_clist
+{
+	char			*content;
+	struct s_clist	*next;
+}				t_clist;
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
+char		*gc_get_next_line(int fd);
+void		gc_generate_line(char **line, t_clist *stash);
+int			gc_found_newline(t_clist *stash);
+t_clist		*gc_ft_lst_get_last(t_clist *stash);
+void		gc_generate_line(char **line, t_clist *stash);
+void		gc_free_stash(t_clist *stash);
 #endif

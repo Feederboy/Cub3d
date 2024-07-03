@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerra <mguerra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:50:37 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/08 12:52:39 by maquentr         ###   ########.fr       */
+/*   Updated: 2023/02/16 22:11:37 by mguerra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	Or a square in y direction (stepY)
 **	When the ray has hit a wall,the loop end
 */
-void	dda_calc()
+void	dda_calc(void)
 {
 	int	hit;
 
@@ -27,80 +27,82 @@ void	dda_calc()
 	{
 		if (data()->ray->sidedist_x < data()->ray->sidedist_y)
 		{
-			data()->ray->sidedist_x += data()->ray->deltadist_x;
+			data()->ray->sidedist_x += data()->ray->dd_x;
 			data()->ray->map_x += data()->ray->step_x;
 			data()->ray->side = 0;
 		}
 		else
 		{
-			data()->ray->sidedist_y += data()->ray->deltadist_y;
+			data()->ray->sidedist_y += data()->ray->dd_y;
 			data()->ray->map_y += data()->ray->step_y;
 			data()->ray->side = 1;
 		}
-		if (data()->map->map_split[data()->ray->map_y][data()->ray->map_x] == '1')
+		if (data()->map->map[data()->ray->map_y][data()->ray->map_x] == '1')
 			hit = 1;
 	}
 	if (data()->ray->side == 0)
-		data()->ray->perpwalldist = data()->ray->sidedist_x - data()->ray->deltadist_x;
+		data()->ray->w_dist = data()->ray->sidedist_x - data()->ray->dd_x;
 	else
-		data()->ray->perpwalldist = data()->ray->sidedist_y - data()->ray->deltadist_y;
+		data()->ray->w_dist = data()->ray->sidedist_y - data()->ray->dd_y;
 }
 
-void	mapping_buff()
+void	mapping_buff(void)
 {
 	double	wall;
+	t_ray	*r;
 
-	if (data()->ray->side == 0)
-		wall = data()->p->pos_y + (data()->ray->perpwalldist * data()->ray->raydir_y);
+	r = data()->ray;
+	if (r->side == 0)
+		wall = data()->p->pos_y + (r->w_dist * r->d_y);
 	else
-		wall = data()->p->pos_x + (data()->ray->perpwalldist * data()->ray->raydir_x);
+		wall = data()->p->pos_x + (r->w_dist * r->d_x);
 	wall = wall - floor(wall);
-	data()->ray->tex_x = (int)(wall * (double)TEXWIDTH);
-	if (data()->ray->side == 0 && data()->ray->raydir_x < 0)
-		data()->ray->tex_x = TEXWIDTH - data()->ray->tex_x - 1;
-	if (data()->ray->side == 1 && data()->ray->raydir_y > 0)
-		data()->ray->tex_x = TEXWIDTH - data()->ray->tex_x - 1;
-	data()->ray->line_h = (int)(HEIGHT / data()->ray->perpwalldist);
-	data()->ray->start = HEIGHT / 2 - data()->ray->line_h / 2;
-	data()->ray->end = HEIGHT / 2 + data()->ray->line_h / 2;
-	if (data()->ray->start < 0)
-		data()->ray->start = 0;
-	if (data()->ray->end >= HEIGHT)
-		data()->ray->end = HEIGHT;
-	data()->ray->ratio = 1.0 * TEXHEIGHT / data()->ray->line_h;
-	data()->ray->texpos = (data()->ray->start - HEIGHT / 2 + data()->ray->line_h / 2) * data()->ray->ratio;
+	r->tex_x = (int)(wall * (double)TEXWIDTH);
+	if (r->side == 0 && r->d_x < 0)
+		r->tex_x = TEXWIDTH - r->tex_x - 1;
+	if (r->side == 1 && r->d_y > 0)
+		r->tex_x = TEXWIDTH - r->tex_x - 1;
+	r->line_h = (int)(HEIGHT / r->w_dist);
+	r->start = HEIGHT / 2 - r->line_h / 2;
+	r->end = HEIGHT / 2 + r->line_h / 2;
+	if (r->start < 0)
+		r->start = 0;
+	if (r->end >= HEIGHT)
+		r->end = HEIGHT;
+	r->ratio = 1.0 * TEXHEIGHT / r->line_h;
+	r->texpos = (r->start - HEIGHT / 2 + r->line_h / 2) * r->ratio;
 }
 
 void	set_buff(int x)
 {
 	int		color;
-	int		y;
+	t_ray	*r;
 
-	y = data()->ray->start;
-	while (y < data()->ray->end)
+	r = data()->ray;
+	while (r->start < r->end)
 	{
-		data()->ray->tex_y = (int)data()->ray->texpos & (TEXHEIGHT - 1);
-		if (data()->ray->side == 0)
+		r->tex_y = (int)r->texpos & (TEXHEIGHT - 1);
+		if (r->side == 0)
 		{
-			if (data()->ray->raydir_x >= 0)
-				color = data()->img->arr_img[E][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+			if (r->d_x >= 0)
+				color = data()->img->a_img[E][TEXHEIGHT * r->tex_y + r->tex_x];
 			else
-				color = data()->img->arr_img[W][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+				color = data()->img->a_img[W][TEXHEIGHT * r->tex_y + r->tex_x];
 		}
-		else if (data()->ray->side == 1)
+		else if (r->side == 1)
 		{
-			if (data()->ray->raydir_y >= 0)
-				color = data()->img->arr_img[S][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+			if (r->d_y >= 0)
+				color = data()->img->a_img[S][TEXHEIGHT * r->tex_y + r->tex_x];
 			else
-				color = data()->img->arr_img[N][TEXHEIGHT * data()->ray->tex_y + data()->ray->tex_x];
+				color = data()->img->a_img[N][TEXHEIGHT * r->tex_y + r->tex_x];
 		}
-		data()->img->buffer[y][x] = color;
-		data()->ray->texpos += data()->ray->ratio;
-		y++;
+		data()->img->buffer[r->start][x] = color;
+		r->texpos += r->ratio;
+		r->start++;
 	}
 }
 
-void	raycasting()
+void	raycasting(void)
 {
 	int	x;
 

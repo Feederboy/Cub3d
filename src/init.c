@@ -3,18 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maquentr <maquentr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerra <mguerra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/08 13:00:39 by maquentr          #+#    #+#             */
-/*   Updated: 2023/02/16 15:31:59 by maquentr         ###   ########.fr       */
+/*   Created: 2023/02/16 15:29:27 by mguerra           #+#    #+#             */
+/*   Updated: 2023/02/16 22:13:02 by mguerra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_player()
+void	init_map(t_map *map)
 {
-	printf("INIT PLAYER1\n");
+	map->no = NULL;
+	map->so = NULL;
+	map->we = NULL;
+	map->ea = NULL;
+	map->map_str = NULL;
+	map->map = NULL;
+	map->floor = -1;
+	map->ceiling = -1;
+	map->cols = 0;
+	map->rows = 0;
+}
+
+void	init_img(t_img *img)
+{
+	img->img = NULL;
+	img->data = NULL;
+	img->bpp = 0;
+	img->line_size = 0;
+	img->endian = 0;
+	img->a_img = NULL;
+}
+
+void	init_move(void)
+{
+	data()->move->key_w = 0;
+	data()->move->key_a = 0;
+	data()->move->key_s = 0;
+	data()->move->key_d = 0;
+	data()->move->arr_l = 0;
+	data()->move->arr_r = 0;
+}
+
+void	init_player(void)
+{
 	data()->p->dir_x = 0;
 	data()->p->dir_y = 0;
 	if (data()->p->status == N)
@@ -38,44 +71,5 @@ void	init_player()
 		data()->p->plane_y = 0.66;
 	}
 	data()->p->move_speed = 0.05;
-	data()->p->rot_speed = 0.05;
-	printf("INIT PLAYER2\n");
-}
-
-
-void	init_map()
-{
-	data()->map->no_path = NULL;
-	data()->map->so_path = NULL;
-	data()->map->we_path = NULL;
-	data()->map->ea_path = NULL;
-	data()->map->floor = -1;
-	data()->map->celling = -1;
-	data()->map->mapp = NULL;
-	data()->map->height = HEIGHT;
-	data()->map->width = WIDTH;
-	data()->map->mcount = 0;
-	data()->map->start = 0;
-	// data()->map->ret = 1;
-}
-
-void	init_img()
-{
-	printf("INIT IMG\n");
-	data()->img->img = NULL;
-	data()->img->data = NULL;
-	data()->img->bpp = 0;
-	data()->img->line_size = 0;
-	data()->img->endian = 0;
-	data()->img->arr_img = NULL;
-}
-
-void	init_move()
-{
-	data()->move->key_w = 0;
-	data()->move->key_a = 0;
-	data()->move->key_s = 0;
-	data()->move->key_d = 0;
-	data()->move->arr_l = 0;
-	data()->move->arr_r = 0;
+	data()->p->rot_s = 0.05;
 }
